@@ -26,3 +26,12 @@ let Users = module.exports = mongoose.model('users', schemaUser );
 module.exports.getUsers = (callback, limit) => {
     Users.find(callback).limit(limit); 
 }; 
+
+// recherche par Champ (login, nom, etc.)
+module.exports.getUserParChamp = (nomChamp, critere, callback,limit) => {
+    // let query = new Object();
+    // query[nomChamp] = RegExp(critere);
+    const query = {[nomChamp]: RegExp(critere)};
+    console.log(query);
+    Users.find(query, callback).limit(limit);
+}

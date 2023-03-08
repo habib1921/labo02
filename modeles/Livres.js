@@ -54,3 +54,14 @@ module.exports.getLivres = (callback, limit) => {
     //// Le callback ici c'est le filtre qu'on mets a l'interieur de Find()
 }; ////on s'en va maintenant a mom programme principal index.js et ja appelle ma fonction getLivres
 //// On sauvgarde et on s en va a index.js
+
+/// methode pour obtenir un livre par son titre, son auteur, isbn, etc. 
+
+
+module.exports.getLivreParChamp = (nomChamp, critere, callback) => {
+    // let query = new Object();
+    // query[nomChamp] = RegExp(critere);
+    const query = {[nomChamp]: RegExp(critere)};
+    console.log(query);
+    Livres.find(query, callback);
+}
