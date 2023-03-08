@@ -11,11 +11,6 @@ mongoose.connect('mongodb+srv://habib:habib23@cluster0.v6qkwcb.mongodb.net/labo0
 
 
 /////--------------------------------------------------------------------------------------------------------------------------------
-const {getLivres} = require('./modeles/Livres.js'); // cette partie est rajouté vers la fin, on importe la fonction getLivre   -----
-const Livres = require('./modeles/Livres.js'); // on importe la class Livres                                                    -----
-app.use(express.json()); //// pour fournir les resultat au logiciels de navigation sous format JSON                             ------
-// sans express ca aurait ete plusieurs lignes de programmes                                                                    ------
-//// ---------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -32,21 +27,11 @@ db.once('open', () => { // une fois la connexion établie
 console.log('fin du programme'); //// jusqu'ici, le programme fait la connexion à la base de Donnée.  
 
 
-app.get('/', (requete, reponse) => {   //// app.get defini une route (un URI) de type GET.
-    reponse.send('utilisez /api/livres pour faire appel au service Web des livres...');  
-  ////  app.get('/') : cette instruction est lue : si le logiciel de navigation (chrome,FireFox, ...)
- // // demande pour l'élément racine /, on envoie une réponse. 
- //// le '/' c'est ce qu'on tape dans la bare de navigation, 
- // // la requete c'est une autre affaire (c'est ce qu'on envoie, comme dans les formulaire) 
-}); //// la réponde qu'on envoie (reponse.send) c'est juste afficher le message utiliser /api/livres......
 
-app.get('/api/livres', (requete, reponse) => {
-   
-    Livres.getLivres((err, livres)=>{    
-        if (err) throw err;
-        reponse.json(livres);
-    }, 5);
-});
+
+app.use('/',require('./routes/index')); // quand une route generale, va chercher dans index.js dans routes
+app.use('/api',require('./routes/api')); // quand une route commence par /api, va chercher ./routes/api
+
 
 app.listen(8000); ////  Le serveur écoute pour la requete sur le port 8000
 console.log('service Web fonctionnel sur port 8000');
